@@ -4,7 +4,7 @@ Accessibility focused chat app for my sister.
 
 ## Background
 
-The goal of this project was to make a chat app for my sister. My big sister lives with disabilities and over the last year has started to love having Siri dictate emails to me. While this is great, there is also the chance that she sends emails to other random people. I don't know if she knows how to send these emails to my other siblings (5 siblings... big family). So my goal was to create a simple chat app for my family (only), with accessibility in mind. So here was my criteria for my Christmas gift to my sister.
+The goal of this project was to make a chat app for my sister who lives with disabilities. Over the last year she has started to love having Siri dictate emails to me. While this is great, there is also the chance that she sends emails to other random people. I don't know if she knows how to send these emails to my other siblings (5 siblings... big family). So my goal was to create a simple chat app for my family (only), with accessibility in mind. So here was my criteria for my Christmas gift to my sister.
 
 ## Requirements
 
