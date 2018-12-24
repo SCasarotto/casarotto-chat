@@ -1,0 +1,31 @@
+const DEVELOPMENT = {
+	FIREBASE_API_KEY: '',
+	FIREBASE_AUTH_DOMAIN: '',
+	FIREBASE_DATABASE_URL: '',
+	FIREBASE_PROJECT_ID: '',
+	FIREBASE_STORAGE_BUCKET: '',
+	FIREBASE_MESSAGING_SENDER_ID: '',
+}
+
+const PRODUCTION = {
+	FIREBASE_API_KEY: '',
+	FIREBASE_AUTH_DOMAIN: '',
+	FIREBASE_DATABASE_URL: '',
+	FIREBASE_PROJECT_ID: '',
+	FIREBASE_STORAGE_BUCKET: '',
+	FIREBASE_MESSAGING_SENDER_ID: '',
+}
+
+export default {
+	dev: __DEV__,
+	// dev: false,
+	apiDebugging: __DEV__,
+	// apiDebugging: true,
+
+	VERSION: '0.0.1',
+
+	PUSH_NOTIFICATION_URL: 'https://exp.host/--/api/v2/push/send',
+
+	...(__DEV__ ? DEVELOPMENT : PRODUCTION),
+	// ...PRODUCTION,
+}
