@@ -4,10 +4,7 @@
     "slug": "casarotto-chat",
     "privacy": "public",
     "sdkVersion": "31.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,11 +14,14 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 30000
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "androidStatusBarColor": "#c17272",
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#c17272"
+    },
     "ios": {
       "supportsTablet": true
     }

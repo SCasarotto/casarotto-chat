@@ -512,7 +512,7 @@ export const sendAudio = (data) => {
 																sound: 'default',
 																body: `${
 																	user.name
-																} has sent a picture.`,
+																} has sent an audio file.`,
 																badge: 1,
 															})
 														}
