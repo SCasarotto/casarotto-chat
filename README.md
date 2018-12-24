@@ -13,8 +13,8 @@ The goal of this project was to make a chat app for my sister. My big sister liv
 3. Text to speech (she has a hard time reading)
 4. Take/Upload and send photos (she loves taking pictures of our family cat)
 5. Record/Playback and send audio (This might become the most efficient way for her in the future.)
-6. Push Notification (so my family members don't forget to reply)
-7. Cross Platform (Dad has an android)
+6. Push Notification (So my family members don't forget to reply)
+7. Cross Platform (Dad has an Android 🙄)
 
 ## Resources Used
 
@@ -30,7 +30,7 @@ The goal of this project was to make a chat app for my sister. My big sister liv
 ## Installation
 
 1. `git clone`
-2. `yarn install` _(or `npm install` if you are one of those... 😉)_
+2. `yarn install` (or `npm install` if you are one of those... 😉)
 3. Setup `src/config/settings.js` file by adding in firebase configs. See `src/config/settingsExample.js`
 4. Have [expo-cli](https://docs.expo.io/versions/latest/) installed and `yarn start` or `expo start`
 
