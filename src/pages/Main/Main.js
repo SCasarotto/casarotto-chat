@@ -49,7 +49,7 @@ class Main extends Component {
 		recordAudioVisible: false,
 		playingRecording: '',
 	}
-	componentDidMount() {
+	async componentDidMount() {
 		const { numberOfMessagesToLoad } = this.state
 		const { startWatchingUser, startWatchingChat } = this.props
 		startWatchingUser()
@@ -194,7 +194,7 @@ class Main extends Component {
 				<Icon type="Entypo" name="upload" />
 			</Button>
 			<Button block style={styles.actionButton} onPress={this.handleStartAudioRecording}>
-				<Icon type="MaterialIcons" name="keyboard-voice" />
+				<Icon type="MaterialIcons" name="record-voice-over" />
 			</Button>
 		</View>
 	)

@@ -23,7 +23,11 @@
       "backgroundColor": "#c17272"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.38thSS.casarottochat"
+    },
+    "android": {
+      "package": "com.thirtyEigthSS.casarottochat"
     }
   }
 }

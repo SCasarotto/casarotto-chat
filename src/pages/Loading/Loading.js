@@ -40,7 +40,7 @@ class Loading extends Component {
 			playsInSilentModeIOS: true,
 			shouldDuckAndroid: true,
 			interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
-			playThroughEarpieceAndroid: true,
+			playThroughEarpieceAndroid: false,
 		})
 			.then((response) => {
 				// console.log('Audio Mode Setup')

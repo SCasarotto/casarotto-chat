@@ -6,3 +6,4 @@ npm-debug.*
 *.key
 *.mobileprovision
 src/config/settings.js
+ios/*

@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "expo": "^31.0.4",
+    "expokit": "31.0.2",
     "firebase": "^5.7.1",
     "native-base": "2.8.2",
     "react": "16.5.0",
