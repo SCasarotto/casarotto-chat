@@ -64,7 +64,6 @@ export const startLoadingProcess = (navigation) => {
 						.auth()
 						.signInAnonymously()
 						.then((response) => {
-							console.log(response, 'New Account Setup')
 							dispatch({ type: HIDE_NETWORK_ACTIVITY })
 							navigation.dispatch(
 								StackActions.reset({

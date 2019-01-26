@@ -44,7 +44,6 @@ class Setup extends Component {
 					ImagePicker.launchImageLibraryAsync({
 						allowsEditing: true,
 						aspect: [1, 1],
-						base64: true,
 						quality: 0.5,
 					})
 						.then((response) => {

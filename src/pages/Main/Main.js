@@ -63,7 +63,6 @@ class Main extends Component {
 						case 'granted':
 							Notifications.getExpoPushTokenAsync()
 								.then((response) => {
-									console.log('TOKEN!!!', response)
 									const { uid } = firebase.auth().currentUser
 									firebase
 										.database()
@@ -78,7 +77,6 @@ class Main extends Component {
 						case 'denied':
 							Permissions.askAsync(Permissions.NOTIFICATIONS)
 								.then((response) => {
-									console.log('IN HERE')
 									if (response.status !== 'granted') {
 										return
 									}
@@ -132,7 +130,6 @@ class Main extends Component {
 						if (snapshot.val()) {
 							const data = []
 							const thisUserUID = firebase.auth().currentUser.uid
-							console.log(thisUserUID)
 							for (const uid in snapshot.val()) {
 								if (uid !== thisUserUID) {
 									const otherUser = snapshot.val()[uid]
@@ -156,7 +153,9 @@ class Main extends Component {
 								},
 								data,
 							})
-								.then((response) => console.log('push response', response))
+								.then((response) => {
+									// console.log('push response', response)
+								})
 								.catch((error) => console.log(error))
 						}
 					})
@@ -187,13 +186,17 @@ class Main extends Component {
 	}
 	renderAccessory = () => (
 		<View style={styles.actionRow}>
-			<Button block style={styles.actionButton} onPress={this.handleTakeImage}>
+			<Button block style={styles.actionButton('#8e81ab')} onPress={this.handleTakeImage}>
 				<Icon type="Entypo" name="camera" />
 			</Button>
-			<Button block style={styles.actionButton} onPress={this.handleUploadImage}>
+			<Button block style={styles.actionButton('#ff7373')} onPress={this.handleUploadImage}>
 				<Icon type="Entypo" name="upload" />
 			</Button>
-			<Button block style={styles.actionButton} onPress={this.handleStartAudioRecording}>
+			<Button
+				block
+				style={styles.actionButton('#4dbedf')}
+				onPress={this.handleStartAudioRecording}
+			>
 				<Icon type="MaterialIcons" name="record-voice-over" />
 			</Button>
 		</View>
@@ -208,7 +211,6 @@ class Main extends Component {
 		Permissions.askAsync(Permissions.CAMERA_ROLL)
 			.then((response) => {
 				const { status, expires, permissions } = response
-				console.log('Permission Response', response)
 				if (status === 'granted') {
 					ImagePicker.launchImageLibraryAsync({
 						allowsEditing: true,
@@ -217,7 +219,6 @@ class Main extends Component {
 						quality: 0.7,
 					})
 						.then((response) => {
-							console.log(response)
 							if (!response.cancelled) {
 								const { user, sendImage } = this.props
 								const data = { uri: response.uri, user }
@@ -233,7 +234,6 @@ class Main extends Component {
 		Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL)
 			.then((response) => {
 				const { status, expires, permissions } = response
-				console.log('Permission Response', response)
 				if (status === 'granted') {
 					ImagePicker.launchCameraAsync({
 						allowsEditing: true,
@@ -242,7 +242,6 @@ class Main extends Component {
 						quality: 0.7,
 					})
 						.then((response) => {
-							console.log(response)
 							if (!response.cancelled) {
 								const { user, sendImage } = this.props
 								const data = { uri: response.uri, user }
@@ -255,20 +254,27 @@ class Main extends Component {
 			.catch((error) => console.log(error))
 	}
 	handleStartAudioRecording = () => {
-		Permissions.askAsync(Permissions.AUDIO_RECORDING)
+		Audio.setAudioModeAsync({
+			allowsRecordingIOS: true,
+			interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+			playsInSilentModeIOS: true,
+			shouldDuckAndroid: true,
+			interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+			playThroughEarpieceAndroid: false,
+		})
+			.then((response) => {
+				return Permissions.askAsync(Permissions.AUDIO_RECORDING)
+			})
 			.then((response) => {
 				const { status, expires, permissions } = response
-				console.log('Permission Response', response)
 				if (status === 'granted') {
 					const newRecording = new Audio.Recording()
 					newRecording
 						.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY)
 						.then((response) => {
-							console.log('prepareToRecordAsync:', response)
 							return newRecording.startAsync()
 						})
 						.then((response) => {
-							console.log('startAsync', response)
 							this.setState({
 								recordingActive: true,
 								recording: newRecording,
@@ -278,37 +284,60 @@ class Main extends Component {
 						.catch((error) => console.log(error))
 				}
 			})
-			.catch((error) => console.log(error))
+			.catch((error) => {
+				console.log(error)
+				Audio.setAudioModeAsync({
+					allowsRecordingIOS: false,
+					interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+					playsInSilentModeIOS: true,
+					shouldDuckAndroid: true,
+					interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+					playThroughEarpieceAndroid: false,
+				})
+			})
 	}
 	handleCloseAudioRecoding = () => {
 		const { recordingActive, recording } = this.state
 
-		console.log('Stop and Close Recording')
 		recording
 			.stopAndUnloadAsync()
 			.then((response) => {
-				console.log('stopAndUnloadAsync', response)
 				this.setState({
 					recordingActive: false,
 					recording: undefined,
 					recordAudioVisible: false,
 				})
+				Audio.setAudioModeAsync({
+					allowsRecordingIOS: false,
+					interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+					playsInSilentModeIOS: true,
+					shouldDuckAndroid: true,
+					interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+					playThroughEarpieceAndroid: false,
+				})
 			})
-			.catch((error) => console.log(error))
+			.catch((error) => {
+				console.log(error)
+				Audio.setAudioModeAsync({
+					allowsRecordingIOS: false,
+					interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+					playsInSilentModeIOS: true,
+					shouldDuckAndroid: true,
+					interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+					playThroughEarpieceAndroid: false,
+				})
+			})
 	}
 	handleSendAudioReecording = () => {
 		const { recordingActive, recording } = this.state
 		const { sendAudio, user } = this.props
 
-		console.log('Stop Recording')
 		recording
 			.pauseAsync()
 			.then((response) => {
-				console.log('pauseAsync', response)
 				return recording.getURI()
 			})
 			.then((uri) => {
-				console.log('getURI', uri)
 				const data = { uri, user }
 				return sendAudio(data)
 			})
@@ -316,7 +345,17 @@ class Main extends Component {
 				this.handleCloseAudioRecoding()
 			})
 
-			.catch((error) => console.log(error))
+			.catch((error) => {
+				console.log(error)
+				Audio.setAudioModeAsync({
+					allowsRecordingIOS: false,
+					interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+					playsInSilentModeIOS: true,
+					shouldDuckAndroid: true,
+					interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+					playThroughEarpieceAndroid: false,
+				})
+			})
 	}
 	render() {
 		const { messages, recordAudioVisible } = this.state
@@ -358,7 +397,6 @@ class Main extends Component {
 							onLoadEarlier={() => {
 								const { numberOfMessagesToLoad } = this.state
 								const messagesToLoad = numberOfMessagesToLoad + 10
-								console.log('loadEarlier')
 								this.props.startWatchingChat(messagesToLoad)
 								this.setState({ numberOfMessagesToLoad: messagesToLoad })
 							}}

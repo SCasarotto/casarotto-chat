@@ -7,7 +7,11 @@ export default StyleSheet.create({
 		alignItems: 'stretch',
 		flexWrap: 'nowrap',
 	},
-	actionButton: { flex: 1, borderRadius: 0 },
+	actionButton: (color) => ({
+		flex: 1,
+		borderRadius: 0,
+		backgroundColor: color,
+	}),
 	actionButtonText: {
 		fontSize: 14,
 	},

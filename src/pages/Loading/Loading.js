@@ -35,7 +35,7 @@ class Loading extends Component {
 		const { startLoadingProcess, navigation } = this.props
 		startLoadingProcess(navigation)
 		Audio.setAudioModeAsync({
-			allowsRecordingIOS: true,
+			allowsRecordingIOS: false,
 			interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
 			playsInSilentModeIOS: true,
 			shouldDuckAndroid: true,
