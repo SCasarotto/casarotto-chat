@@ -5,9 +5,9 @@ import 'firebase/database'
 import 'firebase/auth'
 import { StackActions, NavigationActions } from 'react-navigation'
 import uuid from 'uuid'
-import axios from 'axios'
 
 import { SHOW_ALERT, SHOW_NETWORK_ACTIVITY, HIDE_NETWORK_ACTIVITY, UserKeys } from './types'
+import { sentNotifications } from './../helpers'
 
 export const startWatchingUser = () => {
 	const { FETCH_USER, SAVE_USER_WATCHER } = UserKeys
@@ -354,46 +354,7 @@ export const sendImage = (data) => {
 									})
 							})
 							.then(() => {
-								firebase
-									.database()
-									.ref('Users')
-									.once('value')
-									.then((snapshot) => {
-										if (snapshot.val()) {
-											const data = []
-											const thisUserUID = firebase.auth().currentUser.uid
-											console.log(thisUserUID)
-											for (const uid in snapshot.val()) {
-												if (uid !== thisUserUID) {
-													const otherUser = snapshot.val()[uid]
-													if (otherUser.exponentPushToken) {
-														data.push({
-															to: otherUser.exponentPushToken,
-															sound: 'default',
-															body: `${
-																user.name
-															} has sent a picture.`,
-															badge: 1,
-														})
-													}
-												}
-											}
-											axios({
-												method: 'POST',
-												url: 'https://exp.host/--/api/v2/push/send',
-												headers: {
-													accept: 'application/json',
-													'accept-encoding': 'gzip, deflate',
-													'content-type': 'application/json',
-												},
-												data,
-											})
-												.then((response) =>
-													console.log('push response', response)
-												)
-												.catch((error) => console.log(error))
-										}
-									})
+								sentNotifications({ user, type: 'image' })
 							})
 							.catch((error) => {
 								console.log(error)
@@ -494,47 +455,7 @@ export const sendAudio = (data) => {
 										})
 								})
 								.then(() => {
-									firebase
-										.database()
-										.ref('Users')
-										.once('value')
-										.then((snapshot) => {
-											if (snapshot.val()) {
-												const data = []
-												const thisUserUID = firebase.auth().currentUser.uid
-												console.log(thisUserUID)
-												for (const uid in snapshot.val()) {
-													if (uid !== thisUserUID) {
-														const otherUser = snapshot.val()[uid]
-														if (otherUser.exponentPushToken) {
-															data.push({
-																to: otherUser.exponentPushToken,
-																sound: 'default',
-																body: `${
-																	user.name
-																} has sent an audio file.`,
-																badge: 1,
-															})
-														}
-													}
-												}
-												axios({
-													method: 'POST',
-													url: 'https://exp.host/--/api/v2/push/send',
-													headers: {
-														accept: 'application/json',
-														'accept-encoding': 'gzip, deflate',
-														'content-type': 'application/json',
-													},
-													data,
-												})
-													.then((response) =>
-														console.log('push response', response)
-													)
-													.catch((error) => console.log(error))
-											}
-										})
-
+									sentNotifications({ user, type: 'audio' })
 									return res()
 								})
 								.catch((error) => {

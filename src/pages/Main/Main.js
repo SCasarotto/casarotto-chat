@@ -5,7 +5,6 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import { Speech, Permissions, ImagePicker, Audio, Constants, Notifications } from 'expo'
-import axios from 'axios'
 
 import {
 	Container,
@@ -39,6 +38,7 @@ import AudioCustom from './AudioCustom'
 
 import settings from './../../config/settings'
 import { colors } from './../../config/styles'
+import { sentNotifications } from './../../helpers'
 import styles from './styles'
 
 class Main extends Component {
@@ -48,6 +48,7 @@ class Main extends Component {
 		recordingActive: false,
 		recordAudioVisible: false,
 		playingRecording: '',
+		previousNotifications: [],
 	}
 	async componentDidMount() {
 		const { numberOfMessagesToLoad } = this.state
@@ -122,43 +123,7 @@ class Main extends Component {
 			.ref('Chat')
 			.push({ ...messages[0], createdAt: firebase.database.ServerValue.TIMESTAMP })
 			.then(() => {
-				firebase
-					.database()
-					.ref('Users')
-					.once('value')
-					.then((snapshot) => {
-						if (snapshot.val()) {
-							const data = []
-							const thisUserUID = firebase.auth().currentUser.uid
-							for (const uid in snapshot.val()) {
-								if (uid !== thisUserUID) {
-									const otherUser = snapshot.val()[uid]
-									if (otherUser.exponentPushToken) {
-										data.push({
-											to: otherUser.exponentPushToken,
-											sound: 'default',
-											body: `${user.name} - ${messages[0].text}.`,
-											badge: 1,
-										})
-									}
-								}
-							}
-							axios({
-								method: 'POST',
-								url: 'https://exp.host/--/api/v2/push/send',
-								headers: {
-									accept: 'application/json',
-									'accept-encoding': 'gzip, deflate',
-									'content-type': 'application/json',
-								},
-								data,
-							})
-								.then((response) => {
-									// console.log('push response', response)
-								})
-								.catch((error) => console.log(error))
-						}
-					})
+				sentNotifications({ user, type: 'message', message: messages[0].text })
 			})
 			.catch((error) => console.log(error))
 	}
