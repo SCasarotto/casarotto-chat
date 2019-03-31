@@ -48,7 +48,6 @@ class Main extends Component {
 		recordingActive: false,
 		recordAudioVisible: false,
 		playingRecording: '',
-		previousNotifications: [],
 	}
 	async componentDidMount() {
 		const { numberOfMessagesToLoad } = this.state
