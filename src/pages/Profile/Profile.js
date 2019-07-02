@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Permissions, ImagePicker } from 'expo'
+import * as Permissions from 'expo-permissions'
+import * as ImagePicker from 'expo-image-picker'
 
 import { Image } from 'react-native'
 import {
@@ -26,7 +27,6 @@ import { uploadImage, saveUser } from './../../actions'
 import PageWrapper from './../../components/PageWrapper'
 
 import { defaultAvatar } from './../../config/images'
-import settings from './../../config/settings'
 import styles from './styles'
 
 class Profile extends Component {
@@ -47,7 +47,7 @@ class Profile extends Component {
 	handleUploadImage = () => {
 		Permissions.askAsync(Permissions.CAMERA_ROLL)
 			.then((response) => {
-				const { status, expires, permissions } = response
+				const { status } = response
 				console.log('Permission Response', response)
 				if (status === 'granted') {
 					ImagePicker.launchImageLibraryAsync({
@@ -70,7 +70,7 @@ class Profile extends Component {
 	handleTakeImage = () => {
 		Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.CAMERA)
 			.then((response) => {
-				const { status, expires, permissions } = response
+				const { status } = response
 				console.log('Permission Response', response)
 				if (status === 'granted') {
 					ImagePicker.launchCameraAsync({
@@ -92,11 +92,11 @@ class Profile extends Component {
 	}
 	handleSetupUser = () => {
 		const { name } = this.state
-		const { setupUser, user, navigation } = this.props
+		const { saveUser, user, navigation } = this.props
 
 		const data = { name, user, navigation }
 
-		setupUser(data)
+		saveUser(data)
 	}
 	handleBack = () => {
 		this.props.navigation.goBack()
@@ -112,7 +112,7 @@ class Profile extends Component {
 					<Header>
 						<Left>
 							<Button transparent onPress={this.handleBack}>
-								<Icon type="Ionicons" name="ios-arrow-back" />
+								<Icon type='Ionicons' name='ios-arrow-back' />
 							</Button>
 						</Left>
 						<Body>
@@ -138,7 +138,7 @@ class Profile extends Component {
 										style={styles.imageUploadButton}
 										onPress={this.handleTakeImage}
 									>
-										<Icon type="Entypo" name="camera" />
+										<Icon type='Entypo' name='camera' />
 									</Button>
 									<Button
 										block
@@ -146,7 +146,7 @@ class Profile extends Component {
 										style={styles.imageUploadButton}
 										onPress={this.handleUploadImage}
 									>
-										<Icon type="Entypo" name="upload" />
+										<Icon type='Entypo' name='upload' />
 									</Button>
 								</View>
 							</View>
@@ -155,10 +155,10 @@ class Profile extends Component {
 								<Input
 									value={name}
 									onChangeText={(name) => this.setState({ name })}
-									autoCapitalize="none"
+									autoCapitalize='none'
 									autoCorrect={false}
 									autoFocus={true}
-									autoCapitalize="words"
+									autoCapitalize='words'
 								/>
 							</Item>
 							<Button

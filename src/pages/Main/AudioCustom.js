@@ -1,25 +1,6 @@
 import React, { Component } from 'react'
-import {
-	Container,
-	Left,
-	Body,
-	Right,
-	Content,
-	Header,
-	View,
-	Text,
-	Button,
-	Icon,
-	Drawer,
-	List,
-	ListItem,
-	Input,
-	Item,
-	Spinner,
-	Title,
-	ActionSheet,
-} from 'native-base'
-import { Audio } from 'expo'
+import { View, Button, Icon } from 'native-base'
+import { Audio } from 'expo-av'
 
 import styles from './styles'
 
@@ -50,6 +31,7 @@ class AudioCustom extends Component {
 				shouldDuckAndroid: true,
 				interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
 				playThroughEarpieceAndroid: false,
+				staysActiveInBackground: false,
 			})
 				.then(() => {
 					const newSoundObject = new Audio.Sound()
@@ -93,14 +75,14 @@ class AudioCustom extends Component {
 					>
 						{playingRecording === _id ? (
 							<Icon
-								type="Entypo"
-								name="controller-stop"
+								type='Entypo'
+								name='controller-stop'
 								style={styles.playPauseIcon(currentMessage.user._id === user._id)}
 							/>
 						) : (
 							<Icon
-								type="Entypo"
-								name="controller-play"
+								type='Entypo'
+								name='controller-play'
 								style={styles.playPauseIcon(currentMessage.user._id === user._id)}
 							/>
 						)}

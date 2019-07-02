@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Permissions, ImagePicker } from 'expo'
+import * as Permissions from 'expo-permissions'
+import * as ImagePicker from 'expo-image-picker'
 
 import { Image } from 'react-native'
 import {
 	Container,
 	Header,
-	Body,
-	Title,
 	Content,
 	Form,
 	View,
@@ -24,7 +23,6 @@ import { startWatchingUser, uploadImage, setupUser } from './../../actions'
 import PageWrapper from './../../components/PageWrapper'
 
 import { defaultAvatar } from './../../config/images'
-import settings from './../../config/settings'
 import styles from './styles'
 
 class Setup extends Component {
@@ -116,7 +114,7 @@ class Setup extends Component {
 										style={styles.imageUploadButton}
 										onPress={this.handleTakeImage}
 									>
-										<Icon type="Entypo" name="camera" />
+										<Icon type='Entypo' name='camera' />
 									</Button>
 									<Button
 										block
@@ -124,7 +122,7 @@ class Setup extends Component {
 										style={styles.imageUploadButton}
 										onPress={this.handleUploadImage}
 									>
-										<Icon type="Entypo" name="upload" />
+										<Icon type='Entypo' name='upload' />
 									</Button>
 								</View>
 							</View>
@@ -133,10 +131,10 @@ class Setup extends Component {
 								<Input
 									value={name}
 									onChangeText={(name) => this.setState({ name })}
-									autoCapitalize="none"
+									autoCapitalize='none'
 									autoCorrect={false}
 									autoFocus={true}
-									autoCapitalize="words"
+									autoCapitalize='words'
 								/>
 							</Item>
 							<Button

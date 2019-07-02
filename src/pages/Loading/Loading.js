@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import firebase from 'firebase/app'
-import { Audio, Constants, Permissions, Notifications } from 'expo'
+import { Audio } from 'expo-av'
 
-import { Container, Content, Header, Footer, View, Text } from 'native-base'
+import { Container, Content, View, Text } from 'native-base'
 
 import { startLoadingProcess } from './../../actions'
 
@@ -41,6 +41,7 @@ class Loading extends Component {
 			shouldDuckAndroid: true,
 			interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
 			playThroughEarpieceAndroid: false,
+			staysActiveInBackground: false,
 		})
 			.then((response) => {
 				// console.log('Audio Mode Setup')

@@ -4,29 +4,15 @@ import { GiftedChat } from 'react-native-gifted-chat'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
-import { Speech, Permissions, ImagePicker, Audio, Constants, Notifications } from 'expo'
+import Constants from 'expo-constants'
+import { Audio } from 'expo-av'
+import * as Speech from 'expo-speech'
+import * as Permissions from 'expo-permissions'
+import * as ImagePicker from 'expo-image-picker'
+import { Notifications } from 'expo'
 
-import {
-	Container,
-	Left,
-	Body,
-	Right,
-	Content,
-	Header,
-	View,
-	Text,
-	Button,
-	Icon,
-	Drawer,
-	List,
-	ListItem,
-	Input,
-	Item,
-	Spinner,
-	Title,
-	ActionSheet,
-} from 'native-base'
-import { Platform, AsyncStorage, Clipboard, AppState } from 'react-native'
+import { Container, Left, Body, Right, Header, View, Button, Icon, Drawer } from 'native-base'
+import { Clipboard, AppState } from 'react-native'
 
 import { startWatchingUser, startWatchingChat, sendImage, sendAudio } from './../../actions'
 
@@ -36,8 +22,6 @@ import Confirm from './../../components/Popup/Confirm'
 import Sidebar from './Sidebar'
 import AudioCustom from './AudioCustom'
 
-import settings from './../../config/settings'
-import { colors } from './../../config/styles'
 import { sentNotifications } from './../../helpers'
 import styles from './styles'
 
@@ -151,17 +135,17 @@ class Main extends Component {
 	renderAccessory = () => (
 		<View style={styles.actionRow}>
 			<Button block style={styles.actionButton('#8e81ab')} onPress={this.handleTakeImage}>
-				<Icon type="Entypo" name="camera" />
+				<Icon type='Entypo' name='camera' />
 			</Button>
 			<Button block style={styles.actionButton('#ff7373')} onPress={this.handleUploadImage}>
-				<Icon type="Entypo" name="upload" />
+				<Icon type='Entypo' name='upload' />
 			</Button>
 			<Button
 				block
 				style={styles.actionButton('#4dbedf')}
 				onPress={this.handleStartAudioRecording}
 			>
-				<Icon type="MaterialIcons" name="record-voice-over" />
+				<Icon type='MaterialIcons' name='record-voice-over' />
 			</Button>
 		</View>
 	)
@@ -225,6 +209,7 @@ class Main extends Component {
 			shouldDuckAndroid: true,
 			interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
 			playThroughEarpieceAndroid: false,
+			staysActiveInBackground: false,
 		})
 			.then((response) => {
 				return Permissions.askAsync(Permissions.AUDIO_RECORDING)
@@ -257,6 +242,7 @@ class Main extends Component {
 					shouldDuckAndroid: true,
 					interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
 					playThroughEarpieceAndroid: false,
+					staysActiveInBackground: false,
 				})
 			})
 	}
@@ -278,6 +264,7 @@ class Main extends Component {
 					shouldDuckAndroid: true,
 					interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
 					playThroughEarpieceAndroid: false,
+					staysActiveInBackground: false,
 				})
 			})
 			.catch((error) => {
@@ -289,6 +276,7 @@ class Main extends Component {
 					shouldDuckAndroid: true,
 					interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
 					playThroughEarpieceAndroid: false,
+					staysActiveInBackground: false,
 				})
 			})
 	}
@@ -318,6 +306,7 @@ class Main extends Component {
 					shouldDuckAndroid: true,
 					interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
 					playThroughEarpieceAndroid: false,
+					staysActiveInBackground: false,
 				})
 			})
 	}
@@ -339,7 +328,7 @@ class Main extends Component {
 						<Header>
 							<Left>
 								<Button transparent onPress={this.openDrawer}>
-									<Icon type="Feather" name="menu" />
+									<Icon type='Feather' name='menu' />
 								</Button>
 							</Left>
 							<Body />
@@ -369,12 +358,12 @@ class Main extends Component {
 				</Drawer>
 				<Confirm
 					visible={recordAudioVisible}
-					title="Audio Recording"
-					message="Audio is now recording..."
+					title='Audio Recording'
+					message='Audio is now recording...'
 					leftOnPress={this.handleCloseAudioRecoding}
-					leftButtonTitle="Cancel"
+					leftButtonTitle='Cancel'
 					rightOnPress={this.handleSendAudioReecording}
-					rightButtonTitle="Send Recording"
+					rightButtonTitle='Send Recording'
 				/>
 			</PageWrapper>
 		)
