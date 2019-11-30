@@ -128,7 +128,7 @@ class Main extends Component {
 							Clipboard.setString(currentMessage.text)
 							break
 					}
-				}
+				},
 			)
 		}
 	}
@@ -161,14 +161,14 @@ class Main extends Component {
 				const { status, expires, permissions } = response
 				if (status === 'granted') {
 					ImagePicker.launchImageLibraryAsync({
-						allowsEditing: true,
-						aspect: [1, 1],
+						// mediaTypes: 'All',
 						base64: true,
-						quality: 0.7,
+						quality: 0.85,
 					})
 						.then((response) => {
 							if (!response.cancelled) {
 								const { user, sendImage } = this.props
+								//TODO: Check if it is a video and store video
 								const data = { uri: response.uri, user }
 								sendImage(data)
 							}
@@ -184,14 +184,14 @@ class Main extends Component {
 				const { status, expires, permissions } = response
 				if (status === 'granted') {
 					ImagePicker.launchCameraAsync({
-						allowsEditing: true,
-						aspect: [1, 1],
+						// mediaTypes: 'All',
 						base64: true,
-						quality: 0.7,
+						quality: 0.85,
 					})
 						.then((response) => {
 							if (!response.cancelled) {
 								const { user, sendImage } = this.props
+								//TODO: Check if it is a video and store video
 								const data = { uri: response.uri, user }
 								sendImage(data)
 							}
@@ -375,7 +375,9 @@ const mapStateToProps = (state) => {
 	return { user, chat }
 }
 
-export default connect(
-	mapStateToProps,
-	{ startWatchingUser, startWatchingChat, sendImage, sendAudio }
-)(Main)
+export default connect(mapStateToProps, {
+	startWatchingUser,
+	startWatchingChat,
+	sendImage,
+	sendAudio,
+})(Main)
