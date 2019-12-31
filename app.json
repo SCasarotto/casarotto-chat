@@ -3,12 +3,12 @@
     "name": "casarotto-chat",
     "slug": "casarotto-chat",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android"
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -30,7 +30,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.38thSS.casarottochat",
-      "buildNumber": "3"
+      "buildNumber": "4"
     },
     "android": {
       "package": "com.thirtyEigthSS.casarottochat"
