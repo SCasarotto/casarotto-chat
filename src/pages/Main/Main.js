@@ -39,50 +39,49 @@ class Main extends Component {
 		startWatchingUser()
 		startWatchingChat(numberOfMessagesToLoad)
 
-		if (Constants.isDevice) {
-			//Only Run On Devices. Will Crash in emulators
-			Permissions.getAsync(Permissions.NOTIFICATIONS)
-				.then((response) => {
-					switch (response.status) {
-						case 'granted':
-							Notifications.getExpoPushTokenAsync()
-								.then((response) => {
-									const { uid } = firebase.auth().currentUser
-									firebase
-										.database()
-										.ref(`/Users/${uid}`)
-										.update({
-											exponentPushToken: response,
-										})
-								})
-								.catch((error) => console.log(error))
-							break
-						case 'undetermined':
-						case 'denied':
-							Permissions.askAsync(Permissions.NOTIFICATIONS)
-								.then((response) => {
-									if (response.status !== 'granted') {
-										return
-									}
-
-									Notifications.getExpoPushTokenAsync()
-										.then((response) => {
-											const { uid } = firebase.auth().currentUser
-											firebase
-												.database()
-												.ref(`/Users/${uid}`)
-												.update({
-													exponentPushToken: response,
-												})
-										})
-										.catch((error) => console.log(error))
-								})
-								.catch((error) => console.log(error))
-						default:
-							break
+		try {
+			if (Constants.isDevice) {
+				//Only Run On Devices. Will Crash in emulators
+				const getResponse = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+				const { uid } = firebase.auth().currentUser
+				//Save it to DB for debugging
+				firebase
+					.database()
+					.ref(`/Users/${uid}`)
+					.update({
+						pushPermissions: getResponse,
+					})
+				switch (response.status) {
+					case 'granted': {
+						const token = await Notifications.getExpoPushTokenAsync()
+						firebase
+							.database()
+							.ref(`/Users/${uid}`)
+							.update({
+								exponentPushToken: token,
+							})
+						break
 					}
-				})
-				.catch((error) => console.log(error))
+					case 'undetermined':
+					case 'denied': {
+						const askResponse = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+						if (askResponse.status !== 'granted') {
+							return
+						}
+						const token = await Notifications.getExpoPushTokenAsync()
+						firebase
+							.database()
+							.ref(`/Users/${uid}`)
+							.update({
+								exponentPushToken: token,
+							})
+					}
+					default:
+						break
+				}
+			}
+		} catch (e) {
+			console.log(e)
 		}
 
 		//Reset On Load or On Background -> Active
