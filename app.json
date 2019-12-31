@@ -1,39 +1,34 @@
 {
-  "expo": {
-    "name": "casarotto-chat",
-    "slug": "casarotto-chat",
-    "privacy": "public",
-    "sdkVersion": "36.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "version": "1.0.3",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 30000
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "androidStatusBarColor": "#c17272",
-    "androidStatusBar": {
-      "barStyle": "light-content",
-      "backgroundColor": "#c17272"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.38thSS.casarottochat",
-      "buildNumber": "4"
-    },
-    "android": {
-      "package": "com.thirtyEigthSS.casarottochat"
-    }
-  }
+	"expo": {
+		"name": "casarotto-chat",
+		"slug": "casarotto-chat",
+		"privacy": "public",
+		"sdkVersion": "36.0.0",
+		"platforms": ["ios", "android"],
+		"version": "1.0.4",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 30000
+		},
+		"assetBundlePatterns": ["**/*"],
+		"androidStatusBarColor": "#c17272",
+		"androidStatusBar": {
+			"barStyle": "light-content",
+			"backgroundColor": "#c17272"
+		},
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.38thSS.casarottochat",
+			"buildNumber": "5"
+		},
+		"android": {
+			"package": "com.thirtyEigthSS.casarottochat"
+		}
+	}
 }
