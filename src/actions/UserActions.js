@@ -20,7 +20,7 @@ export const startWatchingUser = () => {
 			(snapshot) => {
 				dispatch({ type: FETCH_USER, payload: snapshot.val() })
 			},
-			(error) => console.log(error)
+			(error) => console.log(error),
 		)
 		dispatch({ type: SAVE_USER_WATCHER, payload: userWatcherRef })
 	}
@@ -68,7 +68,7 @@ export const uploadImage = (uri) => {
 					(snapshot) => {
 						// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
 						const progress = Math.round(
-							(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+							(snapshot.bytesTransferred / snapshot.totalBytes) * 100,
 						)
 						dispatch({
 							type: SHOW_NETWORK_ACTIVITY,
@@ -76,10 +76,8 @@ export const uploadImage = (uri) => {
 						})
 						switch (snapshot.state) {
 							case firebase.storage.TaskState.PAUSED: // or 'paused'
-								console.log('Upload is paused')
 								break
 							case firebase.storage.TaskState.RUNNING: // or 'running'
-								console.log('Upload is running')
 								break
 						}
 					},
@@ -98,7 +96,6 @@ export const uploadImage = (uri) => {
 						upload.snapshot.ref
 							.getDownloadURL()
 							.then((downloadURL) => {
-								console.log('SUCCESS Uploading image', downloadURL)
 								return firebase
 									.database()
 									.ref(`Users/${uid}`)
@@ -123,7 +120,7 @@ export const uploadImage = (uri) => {
 									},
 								})
 							})
-					}
+					},
 				)
 			})
 			.catch((error) => {
@@ -171,7 +168,7 @@ export const setupUser = (data) => {
 		firebase
 			.database()
 			.ref(`Users/${uid}`)
-			.update({ name })
+			.update({ name, lastSignIn: new Date().getTime() })
 			.then(() => {
 				dispatch({
 					type: SHOW_ALERT,
@@ -184,7 +181,7 @@ export const setupUser = (data) => {
 					StackActions.reset({
 						index: 0,
 						actions: [NavigationActions.navigate({ routeName: 'Main' })],
-					})
+					}),
 				)
 			})
 			.catch((error) => {
@@ -273,7 +270,7 @@ export const startWatchingChat = (last = 2) => {
 				(snapshot) => {
 					dispatch({ type: UserKeys.FETCH_CHAT, payload: snapshot.val() })
 				},
-				(error) => console.log(error)
+				(error) => console.log(error),
 			)
 	}
 }
@@ -312,7 +309,7 @@ export const sendImage = (data) => {
 					(snapshot) => {
 						// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
 						const progress = Math.round(
-							(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+							(snapshot.bytesTransferred / snapshot.totalBytes) * 100,
 						)
 						dispatch({
 							type: SHOW_NETWORK_ACTIVITY,
@@ -320,10 +317,8 @@ export const sendImage = (data) => {
 						})
 						switch (snapshot.state) {
 							case firebase.storage.TaskState.PAUSED: // or 'paused'
-								console.log('Upload is paused')
 								break
 							case firebase.storage.TaskState.RUNNING: // or 'running'
-								console.log('Upload is running')
 								break
 						}
 					},
@@ -366,7 +361,7 @@ export const sendImage = (data) => {
 									},
 								})
 							})
-					}
+					},
 				)
 			})
 			.catch((error) => {
@@ -412,7 +407,7 @@ export const sendAudio = (data) => {
 						(snapshot) => {
 							// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
 							const progress = Math.round(
-								(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+								(snapshot.bytesTransferred / snapshot.totalBytes) * 100,
 							)
 							dispatch({
 								type: SHOW_NETWORK_ACTIVITY,
@@ -420,10 +415,8 @@ export const sendAudio = (data) => {
 							})
 							switch (snapshot.state) {
 								case firebase.storage.TaskState.PAUSED: // or 'paused'
-									console.log('Upload is paused')
 									break
 								case firebase.storage.TaskState.RUNNING: // or 'running'
-									console.log('Upload is running')
 									break
 							}
 						},
@@ -469,7 +462,7 @@ export const sendAudio = (data) => {
 									})
 									return rej()
 								})
-						}
+						},
 					)
 				})
 				.catch((error) => {

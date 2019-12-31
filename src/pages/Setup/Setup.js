@@ -37,7 +37,6 @@ class Setup extends Component {
 		Permissions.askAsync(Permissions.CAMERA_ROLL)
 			.then((response) => {
 				const { status, expires, permissions } = response
-				console.log('Permission Response', response)
 				if (status === 'granted') {
 					ImagePicker.launchImageLibraryAsync({
 						allowsEditing: true,
@@ -59,7 +58,6 @@ class Setup extends Component {
 		Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.CAMERA)
 			.then((response) => {
 				const { status, expires, permissions } = response
-				console.log('Permission Response', response)
 				if (status === 'granted') {
 					ImagePicker.launchCameraAsync({
 						allowsEditing: true,
@@ -68,7 +66,6 @@ class Setup extends Component {
 						quality: 0.5,
 					})
 						.then((response) => {
-							console.log(response)
 							if (!response.cancelled) {
 								this.props.uploadImage(response.uri)
 							}
@@ -158,7 +155,4 @@ const mapStateToProps = (state) => {
 	return { user }
 }
 
-export default connect(
-	mapStateToProps,
-	{ startWatchingUser, uploadImage, setupUser }
-)(Setup)
+export default connect(mapStateToProps, { startWatchingUser, uploadImage, setupUser })(Setup)

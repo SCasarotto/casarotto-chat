@@ -17,7 +17,6 @@ export const startLoadingProcess = (navigation) => {
 			if (firstTimeCheck) {
 				firstTimeCheck = false
 				if (user) {
-					// console.log('User Found')
 					//Check Account Complete
 					try {
 						const { uid } = firebase.auth().currentUser
@@ -26,7 +25,11 @@ export const startLoadingProcess = (navigation) => {
 							.ref(`Users/${uid}`)
 							.once('value')
 						const userModel = snapshot.val()
-						console.log(userModel)
+
+						firebase
+							.database()
+							.ref(`Users/${uid}/lastSignIn`)
+							.set(new Date().getTime())
 						if (userModel && userModel.name && userModel.avatarURL) {
 							dispatch({ type: HIDE_NETWORK_ACTIVITY })
 							navigation.dispatch(
@@ -50,7 +53,6 @@ export const startLoadingProcess = (navigation) => {
 						return
 					}
 				} else {
-					// console.log('No User Found')
 					try {
 						await firebase.auth().signInAnonymously()
 						dispatch({ type: HIDE_NETWORK_ACTIVITY })
