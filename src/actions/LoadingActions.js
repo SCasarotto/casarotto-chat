@@ -2,6 +2,7 @@ import { StackActions, NavigationActions } from 'react-navigation'
 import firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/auth'
+import settings from './../config/settings'
 
 import { SHOW_NETWORK_ACTIVITY, HIDE_NETWORK_ACTIVITY } from './../actions/types'
 
@@ -28,8 +29,11 @@ export const startLoadingProcess = (navigation) => {
 
 						firebase
 							.database()
-							.ref(`Users/${uid}/lastSignIn`)
-							.set(new Date().getTime())
+							.ref(`Users/${uid}`)
+							.update({
+								lastSignIn: new Date().getTime(),
+								version: settings.VERSION,
+							})
 						if (userModel && userModel.name && userModel.avatarURL) {
 							dispatch({ type: HIDE_NETWORK_ACTIVITY })
 							navigation.dispatch(

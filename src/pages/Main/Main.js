@@ -51,7 +51,7 @@ class Main extends Component {
 					.update({
 						pushPermissions: getResponse,
 					})
-				switch (response.status) {
+				switch (getResponse.status) {
 					case 'granted': {
 						const token = await Notifications.getExpoPushTokenAsync()
 						firebase
@@ -62,8 +62,7 @@ class Main extends Component {
 							})
 						break
 					}
-					case 'undetermined':
-					case 'denied': {
+					case 'undetermined': {
 						const askResponse = await Permissions.askAsync(Permissions.NOTIFICATIONS)
 						if (askResponse.status !== 'granted') {
 							return
@@ -75,6 +74,25 @@ class Main extends Component {
 							.update({
 								exponentPushToken: token,
 							})
+						break
+					}
+					case 'denied': {
+						if (getResponse.canAskAgain) {
+							const askResponse = await Permissions.askAsync(
+								Permissions.NOTIFICATIONS,
+							)
+							if (askResponse.status !== 'granted') {
+								return
+							}
+							const token = await Notifications.getExpoPushTokenAsync()
+							firebase
+								.database()
+								.ref(`/Users/${uid}`)
+								.update({
+									exponentPushToken: token,
+								})
+						}
+						break
 					}
 					default:
 						break
