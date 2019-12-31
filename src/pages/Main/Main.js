@@ -163,7 +163,7 @@ class Main extends Component {
 					ImagePicker.launchImageLibraryAsync({
 						// mediaTypes: 'All',
 						base64: true,
-						quality: 0.85,
+						quality: 1,
 					})
 						.then((response) => {
 							if (!response.cancelled) {
@@ -186,7 +186,7 @@ class Main extends Component {
 					ImagePicker.launchCameraAsync({
 						// mediaTypes: 'All',
 						base64: true,
-						quality: 0.85,
+						quality: 1,
 					})
 						.then((response) => {
 							if (!response.cancelled) {
