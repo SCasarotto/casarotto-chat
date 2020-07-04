@@ -45,21 +45,15 @@ class Main extends Component {
 				const getResponse = await Permissions.getAsync(Permissions.NOTIFICATIONS)
 				const { uid } = firebase.auth().currentUser
 				//Save it to DB for debugging
-				firebase
-					.database()
-					.ref(`/Users/${uid}`)
-					.update({
-						pushPermissions: getResponse,
-					})
+				firebase.database().ref(`/Users/${uid}`).update({
+					pushPermissions: getResponse,
+				})
 				switch (getResponse.status) {
 					case 'granted': {
 						const token = await Notifications.getExpoPushTokenAsync()
-						firebase
-							.database()
-							.ref(`/Users/${uid}`)
-							.update({
-								exponentPushToken: token,
-							})
+						firebase.database().ref(`/Users/${uid}`).update({
+							exponentPushToken: token,
+						})
 						break
 					}
 					case 'undetermined': {
@@ -68,12 +62,9 @@ class Main extends Component {
 							return
 						}
 						const token = await Notifications.getExpoPushTokenAsync()
-						firebase
-							.database()
-							.ref(`/Users/${uid}`)
-							.update({
-								exponentPushToken: token,
-							})
+						firebase.database().ref(`/Users/${uid}`).update({
+							exponentPushToken: token,
+						})
 						break
 					}
 					case 'denied': {
@@ -85,12 +76,9 @@ class Main extends Component {
 								return
 							}
 							const token = await Notifications.getExpoPushTokenAsync()
-							firebase
-								.database()
-								.ref(`/Users/${uid}`)
-								.update({
-									exponentPushToken: token,
-								})
+							firebase.database().ref(`/Users/${uid}`).update({
+								exponentPushToken: token,
+							})
 						}
 						break
 					}
@@ -166,12 +154,6 @@ class Main extends Component {
 			</Button>
 		</View>
 	)
-	renderCustomView = (props) => {
-		if (props.currentMessage.audio) {
-			return <AudioCustom {...props} />
-		}
-		return null
-	}
 	handleUploadImage = () => {
 		Permissions.askAsync(Permissions.CAMERA_ROLL)
 			.then((response) => {
@@ -362,7 +344,8 @@ class Main extends Component {
 							}}
 							onLongPress={this.onLongPress}
 							renderAccessory={this.renderAccessory}
-							renderCustomView={this.renderCustomView}
+							// renderCustomView={this.renderCustomView}
+							renderMessageAudio={(props) => <AudioCustom {...props} />}
 							loadEarlier
 							onLoadEarlier={() => {
 								const { numberOfMessagesToLoad } = this.state
