@@ -24,7 +24,7 @@
 		"ios": {
 			"supportsTablet": true,
 			"bundleIdentifier": "com.38thSS.casarottochat",
-			"buildNumber": "6"
+			"buildNumber": "1"
 		},
 		"android": {
 			"package": "com.thirtyEigthSS.casarottochat"
