@@ -46,10 +46,10 @@ export const uploadImage = (uri) => {
 		const { uid } = firebase.auth().currentUser
 		new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest()
-			xhr.onload = function() {
+			xhr.onload = function () {
 				resolve(xhr.response)
 			}
-			xhr.onerror = function() {
+			xhr.onerror = function () {
 				reject(new TypeError('Network request failed'))
 			}
 			xhr.responseType = 'blob'
@@ -58,10 +58,7 @@ export const uploadImage = (uri) => {
 		})
 			.then((blob) => {
 				const metadata = { contentType: 'image/jpg' }
-				var upload = firebase
-					.storage()
-					.ref(`user/${uid}.jpg`)
-					.put(blob, metadata)
+				var upload = firebase.storage().ref(`user/${uid}.jpg`).put(blob, metadata)
 
 				upload.on(
 					firebase.storage.TaskEvent.STATE_CHANGED,
@@ -286,10 +283,10 @@ export const sendImage = (data) => {
 		const { uid } = firebase.auth().currentUser
 		new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest()
-			xhr.onload = function() {
+			xhr.onload = function () {
 				resolve(xhr.response)
 			}
-			xhr.onerror = function() {
+			xhr.onerror = function () {
 				reject(new TypeError('Network request failed'))
 			}
 			xhr.responseType = 'blob'
@@ -299,10 +296,7 @@ export const sendImage = (data) => {
 			.then((blob) => {
 				const messageId = uuid.v4()
 				const metadata = { contentType: 'image/jpg' }
-				var upload = firebase
-					.storage()
-					.ref(`chat/${messageId}.jpg`)
-					.put(blob, metadata)
+				var upload = firebase.storage().ref(`chat/${messageId}.jpg`).put(blob, metadata)
 
 				upload.on(
 					firebase.storage.TaskEvent.STATE_CHANGED,
@@ -382,10 +376,10 @@ export const sendAudio = (data) => {
 			const { uid } = firebase.auth().currentUser
 			new Promise((resolve, reject) => {
 				const xhr = new XMLHttpRequest()
-				xhr.onload = function() {
+				xhr.onload = function () {
 					resolve(xhr.response)
 				}
-				xhr.onerror = function() {
+				xhr.onerror = function () {
 					reject(new TypeError('Network request failed'))
 				}
 				xhr.responseType = 'blob'
