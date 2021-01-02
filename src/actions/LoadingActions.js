@@ -7,6 +7,7 @@ import settings from './../config/settings'
 import { SHOW_NETWORK_ACTIVITY, HIDE_NETWORK_ACTIVITY } from './../actions/types'
 
 export const startLoadingProcess = (navigation) => {
+	console.log('startLoadingProcess')
 	return (dispatch) => {
 		dispatch({
 			type: SHOW_NETWORK_ACTIVITY,
@@ -15,25 +16,20 @@ export const startLoadingProcess = (navigation) => {
 
 		let firstTimeCheck = true
 		firebase.auth().onAuthStateChanged(async (user) => {
+			console.log('Inside User Check', user)
 			if (firstTimeCheck) {
 				firstTimeCheck = false
 				if (user) {
 					//Check Account Complete
 					try {
 						const { uid } = firebase.auth().currentUser
-						const snapshot = await firebase
-							.database()
-							.ref(`Users/${uid}`)
-							.once('value')
+						const snapshot = await firebase.database().ref(`Users/${uid}`).once('value')
 						const userModel = snapshot.val()
 
-						firebase
-							.database()
-							.ref(`Users/${uid}`)
-							.update({
-								lastSignIn: new Date().getTime(),
-								version: settings.VERSION,
-							})
+						firebase.database().ref(`Users/${uid}`).update({
+							lastSignIn: new Date().getTime(),
+							version: settings.VERSION,
+						})
 						if (userModel && userModel.name && userModel.avatarURL) {
 							dispatch({ type: HIDE_NETWORK_ACTIVITY })
 							navigation.dispatch(

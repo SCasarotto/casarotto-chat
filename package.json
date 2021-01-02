@@ -8,19 +8,20 @@
 	},
 	"dependencies": {
 		"axios": "^0.21.1",
-		"expo": "^38.0.0",
-		"expo-av": "~8.2.1",
-		"expo-constants": "~9.1.1",
-		"expo-font": "~8.2.1",
-		"expo-image-picker": "~8.3.0",
-		"expo-speech": "~8.2.1",
+		"expo": "^40.0.0",
+		"expo-app-loading": "^1.0.1",
+		"expo-av": "~8.7.0",
+		"expo-constants": "~9.3.3",
+		"expo-font": "~8.4.0",
+		"expo-image-picker": "~9.2.0",
+		"expo-speech": "~8.5.0",
 		"firebase": "8.2.1",
 		"native-base": "2.15.0",
-		"react": "16.11.0",
-		"react-native": "https://github.com/expo/react-native/archive/sdk-38.0.0.tar.gz",
-		"react-native-gesture-handler": "~1.6.0",
+		"react": "16.13.1",
+		"react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+		"react-native-gesture-handler": "~1.8.0",
 		"react-native-gifted-chat": "0.16.3",
-		"react-native-reanimated": "~1.9.0",
+		"react-native-reanimated": "~1.13.0",
 		"react-navigation": "^3.11.1",
 		"react-redux": "^7.2.2",
 		"redux": "^4.0.5",
@@ -29,7 +30,7 @@
 		"validate.js": "^0.13.1"
 	},
 	"devDependencies": {
-		"babel-preset-expo": "^8.2.3"
+		"babel-preset-expo": "8.3.0"
 	},
 	"private": true
 }
